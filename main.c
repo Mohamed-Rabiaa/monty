@@ -22,7 +22,7 @@ int main(int ac, char **av)
 	char *opcode = NULL;
 	size_t len = 0;
 	unsigned int line_num = 1;
-	/*int arg;*/
+	int arg;
 
 	if (ac != 2)
 	{
@@ -49,7 +49,7 @@ int main(int ac, char **av)
 		{
 			line_toks = _strtok(line, ' ');
 			opcode = line_toks[0];
-			/*arg = atoi(line_toks[1]);*/
+			arg = atoi(line_toks[1]);
 		}
 		else
 			opcode = line;
@@ -58,7 +58,12 @@ int main(int ac, char **av)
 			fprintf(stderr, "L%d: unknown instruction %s\n",
 				line_num, opcode);
 		else
-			(*f)(&stack, line_num);
+		{
+			if (f == push)
+				(*f)(&stack, arg);
+			else
+				(*f)(&stack, line_num);
+		}
 		line_num++;
 	}
 	return (0);
