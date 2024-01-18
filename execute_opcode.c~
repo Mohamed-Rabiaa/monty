@@ -1,0 +1,30 @@
+#include "monty.h"
+
+void execute_opcode(char *line, instruction_t *inst, unsigned int line_num)
+{
+	char *opcode, **line_toks;
+	int arg;
+	void (*f)(stack_t **stack, unsigned int line_number);
+
+	if (_strchr(line, ' '))
+	{
+		line_toks = _strtok(line, ' ');
+		opcode = line_toks[0];
+		arg = atoi(line_toks[1]);
+	}
+	else
+		opcode = line;
+
+	f = search_opcode(opcode, line_num);
+	if (f == NULL)
+		fprintf(stderr, "L%d: unknown instruction %s\n",
+			line_num, opcode);
+	else
+	{
+		if (f == push)
+			(*f)(&stack, arg);
+		else
+			(*f)(&stack, line_num);
+	}
+	line_num++;
+}

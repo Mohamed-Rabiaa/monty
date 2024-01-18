@@ -38,8 +38,19 @@ typedef struct instruction_s
 } instruction_t;
 
 extern stack_t *stack;
+
+void (*search_opcode(char *opcode, unsigned int line_num))
+(stack_t **stack, unsigned int line_num);
+void execute_opcode(char *line, unsigned int line_num);
 void push(stack_t **stack, unsigned int line_num);
 void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_num);
+void pop(stack_t **stack, unsigned int line_num);
+void swap(stack_t **stack, unsigned int line_num);
+void add(stack_t **stack, unsigned int line_num);
+void nop(stack_t **stack, unsigned int line_num);
+
+
 char **_strtok(char *line, char delim);
 char *_strchr(char *s, char c);
 int remove_newline(char *str);
